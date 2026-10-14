@@ -1,6 +1,6 @@
 // pep offline support: network first, cached copy when offline.
 // Only touches caches whose names start with "pep-", so the schedule app's cache is left alone.
-const CACHE = 'pep-v1';
+const CACHE = 'pep-v2';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-180.png', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES)).then(() => self.skipWaiting()));
