@@ -48,7 +48,13 @@ const LESSONS=[{"title": "The Midnight Client Lesson", "doc": "PCFkb2N0eXBlIGh0b
 const TOPICS=["V2 vs V3 · have / has / had", "Modal verbs", "Big mix: modals + V3", "Passive: BE + V3", "Review"];
 const TOTAL=TOPICS.length;
 const K='eng-app-progress';
-function load(){try{const v=JSON.parse(localStorage.getItem(K));if(v&&v.unlocked)return v}catch(e){}return {unlocked:2,done:[1],cur:2}}
+function load(){
+  let v=null;try{v=JSON.parse(localStorage.getItem(K))}catch(e){}
+  if(!v||!v.unlocked)v={unlocked:3,done:[1,2],cur:3};
+  /* Lessons 1 and 2 are finished: never start behind Lesson 3 */
+  if(v.unlocked<3){v.unlocked=3;v.cur=3}
+  [1,2].forEach(n=>{if(!v.done.includes(n))v.done.push(n)});
+  return v}
 let st=load();
 function save(){try{localStorage.setItem(K,JSON.stringify(st))}catch(e){}}
 const dec=b=>new TextDecoder().decode(Uint8Array.from(atob(b),c=>c.charCodeAt(0)));
