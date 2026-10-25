@@ -166,6 +166,7 @@ function loadProfile(name){
  const k=pkey(name); let p=lsGet(k);
  if(!p){p={name:name.trim(),created:Date.now(),theme:"sky",font:1,rest:15,m:{...DEFM},last:{},days:{},weights:{}};const sd=SEED_H[fnv(norm(name))];if(sd)Object.assign(p,JSON.parse(JSON.stringify(sd)));lsSet(k,p)}
  p.weights=p.weights||{};
+ {const sd=SEED_H[fnv(norm(name))];if(sd&&(p.seedV||0)<2){for(const d in sd.days){const x=p.days[d];if(!x||x.km==null)p.days[d]=JSON.parse(JSON.stringify(sd.days[d]))}for(const d in (sd.weights||{})){if(p.weights[d]==null)p.weights[d]=sd.weights[d]}if(!p.last||!Object.keys(p.last).length)p.last={...sd.last};p.seedV=2;lsSet(k,p)}}
  P=p; Object.assign(S,{name:p.name,theme:p.theme||"sky",font:p.font||1,rest:p.rest||15,m:Object.assign({...DEFM},p.m||{}),last:p.last||{}},fresh());
  try{localStorage.setItem("tamreen.name",p.name)}catch(e){}
  const run=lsGet("tamreen.run."+k);
