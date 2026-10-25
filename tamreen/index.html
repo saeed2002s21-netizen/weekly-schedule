@@ -80,6 +80,7 @@ button{font-family:inherit}
 #tp .ybar{width:100%;height:80px;display:flex;align-items:flex-end;background:var(--soft);border-radius:6px;overflow:hidden}
 #tp .ybar i{display:block;width:100%;background:var(--pri);border-radius:6px}
 #tp .yb .lbl{font-size:10px}
+#tp .wcard2{text-align:start;padding:12px 14px}
 #tp .note{font-size:12px;color:var(--muted);text-align:center;opacity:.8}
 #tp button:focus-visible,#tp input:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
 @media (max-width:480px) and (pointer:coarse){body{display:block}#tp{width:100%;height:100vh;height:100dvh;border:0;border-radius:0;box-shadow:none;padding-top:env(safe-area-inset-top,0px)}#tp .sb{display:none}#tp .nav{padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}#tp .sc{padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}}
@@ -153,16 +154,18 @@ const DEFM={pushup:"knee",plank:"arm",pull:"home",squat:"chair",glutes:"bridge",
 const fresh=()=>({c:{walk:0,jog:0,mode:null,t0:0,done:false,sw:0,sj:0},w:{stage:null,i:0,round:0,t0:0,dur:0,reps:{},rr:{},val:0,pk:null,start:0,exit:false,next:null},done:false,stW:0,stJ:0,steps:null,sess0:0,sessEnd:0,saved:false});
 const S=Object.assign({name:"",scr:"home",tab:"home",sday:null,range:"w",off:0,font:1,rest:15,demo:false,theme:"sky",m:{...DEFM},last:{}},fresh());
 const SEED={};
-const SAEED_SEED={"last":{"pushup":7,"plank":22,"pull":10,"squat":10,"glutes":10,"abs":10},"days":{"2026-09-20":{"wm":0,"jm":0,"ws":0,"js":0,"est":1,"tm":0,"tot":0,"n":1,"r":{"pushup":10,"plank":25,"pull":10,"squat":10,"glutes":10},"best":{"pushup":5,"plank":13,"pull":5,"squat":5,"glutes":5},"pv":"knee"},"2026-09-27":{"wm":0,"jm":0,"ws":0,"js":0,"est":1,"tm":0,"tot":0,"n":1,"r":{"pushup":6,"plank":34,"pull":10,"squat":10,"glutes":10},"best":{"pushup":3,"plank":17,"pull":5,"squat":5,"glutes":5},"pv":"full"},"2026-09-28":{"wm":20,"jm":5,"ws":2000,"js":750,"est":1,"tm":0,"tot":25,"n":1,"r":{"pushup":7,"plank":36,"pull":13,"squat":15,"glutes":14},"best":{"pushup":4,"plank":19,"pull":7,"squat":8,"glutes":7},"pv":"full"},"2026-09-30":{"wm":0,"jm":0,"ws":0,"js":0,"est":1,"tm":0,"tot":0,"n":1,"r":{"pushup":10,"plank":35,"pull":16,"squat":16,"glutes":17},"best":{"pushup":5,"plank":18,"pull":9,"squat":9,"glutes":9},"pv":"knee"},"2026-10-04":{"wm":18,"jm":4,"ws":1800,"js":600,"est":1,"tm":0,"tot":22,"n":1,"r":{"pushup":11,"plank":40,"pull":20,"squat":20,"glutes":20,"abs":10},"best":{"pushup":6,"plank":20,"pull":10,"squat":10,"glutes":10,"abs":10},"pv":"knee"},"2026-10-05":{"wm":15,"jm":5,"ws":1500,"js":750,"est":1,"tm":0,"tot":20,"n":1,"r":{"pushup":10,"plank":40,"pull":20,"squat":20,"glutes":20,"abs":12},"best":{"pushup":5,"plank":20,"pull":10,"squat":10,"glutes":10,"abs":7},"pv":"knee"},"2026-10-07":{"wm":60,"jm":3,"ws":6000,"js":450,"est":1,"tm":0,"tot":63,"n":1,"r":{"pushup":10,"plank":42,"pull":20,"squat":20,"glutes":20,"abs":14},"best":{"pushup":5,"plank":22,"pull":10,"squat":10,"glutes":10,"abs":7},"pv":"knee"},"2026-10-11":{"wm":34,"jm":5,"ws":3400,"js":750,"est":1,"tm":0,"tot":39,"n":1,"r":{"pushup":12,"plank":40,"pull":20,"squat":20,"glutes":17,"abs":15},"best":{"pushup":6,"plank":20,"pull":10,"squat":10,"glutes":10,"abs":8},"pv":"knee"},"2026-10-13":{"wm":20,"jm":5,"ws":2000,"js":750,"est":1,"tm":0,"tot":25,"n":1,"r":{"pushup":13,"plank":44,"pull":20,"squat":20,"glutes":20,"abs":20},"best":{"pushup":7,"plank":22,"pull":10,"squat":10,"glutes":10,"abs":10},"pv":"knee"}}};
+const SEED_H={"h5a5ce37a":{"last":{"pushup":7,"plank":22,"pull":10,"squat":10,"glutes":10,"abs":10},"days":{"2026-09-20":{"wm":0,"jm":0,"ws":0,"js":0,"est":1,"tm":0,"tot":0,"n":1,"r":{"pushup":10,"plank":25,"pull":10,"squat":10,"glutes":10},"best":{"pushup":5,"plank":13,"pull":5,"squat":5,"glutes":5},"pv":"knee"},"2026-09-27":{"wm":0,"jm":0,"ws":0,"js":0,"est":1,"tm":0,"tot":0,"n":1,"r":{"pushup":6,"plank":34,"pull":10,"squat":10,"glutes":10},"best":{"pushup":3,"plank":17,"pull":5,"squat":5,"glutes":5},"pv":"full"},"2026-09-28":{"wm":20,"jm":5,"ws":2000,"js":750,"est":1,"tm":0,"tot":25,"n":1,"r":{"pushup":7,"plank":36,"pull":13,"squat":15,"glutes":14},"best":{"pushup":4,"plank":19,"pull":7,"squat":8,"glutes":7},"pv":"full"},"2026-09-30":{"wm":0,"jm":0,"ws":0,"js":0,"est":1,"tm":0,"tot":0,"n":1,"r":{"pushup":10,"plank":35,"pull":16,"squat":16,"glutes":17},"best":{"pushup":5,"plank":18,"pull":9,"squat":9,"glutes":9},"pv":"knee"},"2026-10-04":{"wm":18,"jm":4,"ws":1800,"js":600,"est":1,"tm":0,"tot":22,"n":1,"r":{"pushup":11,"plank":40,"pull":20,"squat":20,"glutes":20,"abs":10},"best":{"pushup":6,"plank":20,"pull":10,"squat":10,"glutes":10,"abs":10},"pv":"knee"},"2026-10-05":{"wm":15,"jm":5,"ws":1500,"js":750,"est":1,"tm":0,"tot":20,"n":1,"r":{"pushup":10,"plank":40,"pull":20,"squat":20,"glutes":20,"abs":12},"best":{"pushup":5,"plank":20,"pull":10,"squat":10,"glutes":10,"abs":7},"pv":"knee"},"2026-10-07":{"wm":60,"jm":3,"ws":6000,"js":450,"est":1,"tm":0,"tot":63,"n":1,"r":{"pushup":10,"plank":42,"pull":20,"squat":20,"glutes":20,"abs":14},"best":{"pushup":5,"plank":22,"pull":10,"squat":10,"glutes":10,"abs":7},"pv":"knee"},"2026-10-11":{"wm":34,"jm":5,"ws":3400,"js":750,"est":1,"tm":0,"tot":39,"n":1,"r":{"pushup":12,"plank":40,"pull":20,"squat":20,"glutes":17,"abs":15},"best":{"pushup":6,"plank":20,"pull":10,"squat":10,"glutes":10,"abs":8},"pv":"knee"},"2026-10-13":{"wm":20,"jm":5,"ws":2000,"js":750,"est":1,"tm":0,"tot":25,"n":1,"r":{"pushup":13,"plank":44,"pull":20,"squat":20,"glutes":20,"abs":20},"best":{"pushup":7,"plank":22,"pull":10,"squat":10,"glutes":10,"abs":10},"pv":"knee"}},"weights":{"2026-09-28":75.6,"2026-09-29":75.2,"2026-09-30":75.2,"2026-10-05":75.5,"2026-10-13":75.6,"2026-10-14":74.7}}};
 let P=null;
-SEED["tamreen.p.سعيد"]=SAEED_SEED;
-const pkey=n=>"tamreen.p."+n.trim().replace(/\s+/g," ").toLowerCase();
+const norm=n=>n.trim().replace(/\s+/g," ").toLowerCase();
+const pkey=n=>"tamreen.p."+norm(n);
+const fnv=t=>{let h=0x811c9dc5;for(let i=0;i<t.length;i++){h^=t.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0}return "h"+h.toString(16)};
 const dkey=d=>{d=d||new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
 function lsGet(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function loadProfile(name){
  const k=pkey(name); let p=lsGet(k);
- if(!p){p={name:name.trim(),created:Date.now(),theme:"sky",font:1,rest:15,m:{...DEFM},last:{},days:{}};if(SEED[k])Object.assign(p,JSON.parse(JSON.stringify(SEED[k])));lsSet(k,p)}
+ if(!p){p={name:name.trim(),created:Date.now(),theme:"sky",font:1,rest:15,m:{...DEFM},last:{},days:{},weights:{}};const sd=SEED_H[fnv(norm(name))];if(sd)Object.assign(p,JSON.parse(JSON.stringify(sd)));lsSet(k,p)}
+ p.weights=p.weights||{};
  P=p; Object.assign(S,{name:p.name,theme:p.theme||"sky",font:p.font||1,rest:p.rest||15,m:Object.assign({...DEFM},p.m||{}),last:p.last||{}},fresh());
  try{localStorage.setItem("tamreen.name",p.name)}catch(e){}
  const run=lsGet("tamreen.run."+k);
@@ -181,6 +184,12 @@ function recordSession(){
  P.days[k]=d; for(const id in S.w.rr){const a=S.w.rr[id];S.last[id]=a[1]!=null?a[1]:a[0]}
  S.saved=true; saveProfile(); saveRun();
 }
+const wList=()=>Object.entries((P&&P.weights)||{}).sort((a,b)=>a[0]<b[0]?-1:1);
+const kg=v=>(Math.round(v*10)/10).toFixed(1);
+const sg=v=>"\u2066"+(v>0?"+":"")+kg(v)+"\u2069";
+function spark(pts,w,h){if(pts.length<2)return"";const vs=pts.map(p=>p[1]),mn=Math.min(...vs)-0.3,mx=Math.max(...vs)+0.3,X=i=>w-6-(i/(pts.length-1))*(w-12),Y=v=>h-4-(v-mn)/(mx-mn)*(h-8);
+ const d=pts.map((p,i)=>(i?"L":"M")+X(i).toFixed(1)+" "+Y(p[1]).toFixed(1)).join("");const l=pts.length-1;
+ return '<svg viewBox="0 0 '+w+' '+h+'" width="100%" height="'+h+'" style="display:block"><path d="'+d+'" fill="none" stroke="var(--pri)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="'+X(l)+'" cy="'+Y(pts[l][1])+'" r="4" fill="var(--pri)"/></svg>'}
 function streak(){if(!P)return 0;let n=0,d=new Date();if(!P.days[dkey(d)])d.setDate(d.getDate()-1);while(P.days[dkey(d)]&&P.days[dkey(d)].n){n++;d.setDate(d.getDate()-1)}return n}
 function weekStart(){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+1)%7));return d}
 function week(){const st=weekStart();return [0,1,2,3,4,5,6].map(i=>{const d=new Date(st);d.setDate(st.getDate()+i);const x=P&&P.days[dkey(d)];return x&&x.n?x:null})}
@@ -246,8 +255,18 @@ function render(){
   const cd=S.c.done, wd=S.done, cta=!S.sess0?"ابدأ التمرين":!wd?"كمّل التمرين":null, W=week(), wn=W.filter(Boolean).length, stk=streak(), st=stepsToday();
   h='<div class="row" style="justify-content:space-between;align-items:flex-start"><div><div style="font-size:21px;font-weight:600">'+greet()+'</div><div class="lbl">'+today()+'</div></div>'+(stk?'<span class="pill">'+I("flame",14)+' '+ar(stk)+(stk===1?" يوم":" أيام")+' ورا بعض</span>':'')+'</div>'+
   '<div class="g2"><div class="mc"><div class="lbl">خطوات اليوم</div><div class="big">'+ar(st)+'</div><div class="lbl">من المشي والهرولة</div></div><div class="mc"><div class="lbl">هالأسبوع</div><div class="big">'+ar(wn)+' من 4</div><div class="lbl">أيام تمرين</div></div></div>'+
+  (()=>{const L=wList(),last=L[L.length-1],first=L[0],dlt=last&&first?last[1]-first[1]:0;
+   return '<button class="sec wcard2" id="wopen"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><span style="text-align:start"><span class="lbl" style="display:block">الوزن</span>'+(last?'<span class="big">'+kg(last[1])+'</span> <small class="lbl">كجم</small>'+(L.length>1?' <span class="lbl" style="color:'+(dlt<=0?"var(--pri)":"var(--warm)")+'">'+sg(dlt)+'</span>':''):'<span style="font-size:16px;font-weight:600">سجّل وزنك</span>')+'</span><span style="width:120px">'+spark(L.slice(-10),120,40)+'</span></div>'+(last&&last[0]===dkey()?'':'<div class="lbl" style="margin-top:4px;text-align:start;color:var(--pri)">+ سجّل وزن اليوم</div>')+'</button>'})()+
   '<div class="lbl" style="margin-top:6px">خطة اليوم</div>'+item(1,"المشي والهرولة",cd?tm(el("walk")+el("jog"))+" · تم":"15–25 دقيقة",cd,"cardio")+item(2,"التمارين","تحمية ← جلستين ← إطالات",wd,"warm")+
   (cta?'<button class="pri" id="cta">'+I("play")+' '+cta+'</button>':'<div class="mc done">'+I("check")+' خلصت تمرين اليوم، الله يعطيك العافية</div><button class="sec" id="reset">تمرين ثاني</button>');
+ }else if(S.scr==="weight"){
+  const L=wList(), last=L[L.length-1];
+  if(S.wv==null)S.wv=last?last[1]:70;
+  h='<div class="row" style="justify-content:space-between"><span style="font-size:22px;font-weight:600">الوزن</span><button class="chip" id="wback">رجوع</button></div>'+
+  '<div class="mc" style="text-align:center;padding:18px 12px"><div class="lbl">وزن اليوم · '+today()+'</div><div class="row" style="justify-content:center;gap:16px;margin-top:10px;flex-wrap:nowrap"><button class="stp" id="wmn" aria-label="أقل">−</button><input class="inp" id="wv" inputmode="decimal" style="width:130px;font-size:32px;font-weight:600;font-family:Readex Pro,sans-serif" value="'+kg(S.wv)+'"><button class="stp" id="wpl" aria-label="أكثر">+</button></div><div class="lbl" style="margin-top:6px">كجم · الأزرار تغيّر 0.1</div><div class="err" id="werr"></div></div>'+
+  '<button class="pri" id="wsave">حفظ الوزن</button>'+
+  (L.length>1?'<div class="mc">'+spark(L.slice(-20),340,90)+'</div>':'')+
+  (L.length?'<div class="lbl">السجل</div><div class="mc" style="padding:4px 14px">'+L.slice().reverse().slice(0,12).map(([d,v],i,a)=>{const prev=a[i+1];const dd=prev?v-prev[1]:0;return '<div class="row" style="padding:10px 0;flex-wrap:nowrap;'+(i?"border-top:1px solid var(--line)":"")+'"><span style="flex:1">'+new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-latn",{weekday:"short",day:"numeric",month:"long"}).format(new Date(d+"T12:00"))+'</span><span class="lbl" style="width:50px;color:'+(dd<=0?"var(--pri)":"var(--warm)")+'">'+(prev?sg(dd):"")+'</span><span style="font-weight:600;font-family:Readex Pro,sans-serif">'+kg(v)+'</span></div>'}).join("")+'</div>':'');
  }else if(S.scr==="cardio"){
   const m=S.c.mode;
   h='<div class="row" style="justify-content:space-between;flex-wrap:nowrap"><span class="lbl" style="font-size:14px">1 من 2 · المشي والهرولة</span>'+clock()+'</div><div style="text-align:center;margin-top:10px"><div class="lbl">'+(m?(m==="walk"?"تمشي الحين":"تهرول الحين"):"اختر وابدأ")+'</div><div class="huge" id="tmain">'+tm(el("walk")+el("jog"))+'</div></div>'+
@@ -301,6 +320,8 @@ function render(){
   h='<div style="font-size:22px;font-weight:600">إحصائياتك</div>'+
   '<div class="seg3">'+[["w","أسبوع"],["m","شهر"],["y","سنة"]].map(([k,t])=>'<button class="'+(S.range===k?"on":"")+'" data-rng="'+k+'">'+t+'</button>').join("")+'</div>'+
   '<div class="mc"><div class="row" style="justify-content:space-between;flex-wrap:nowrap;margin-bottom:10px"><button class="chip nav2" data-off="1" aria-label="السابق">›</button><button class="chip'+(selDay?"":" on")+'" data-dk="">'+label+(selDay?"":" · الكل")+'</button><button class="chip nav2" data-off="-1" aria-label="التالي"'+(S.off===0?" disabled":"")+'>‹</button></div>'+grid+'</div>';
+  {const wp=keys.map(k=>[k,P.weights[k]]).filter(x=>x[1]!=null);
+   if(wp.length){const f=wp[0][1],l=wp[wp.length-1][1],dd=l-f;h+='<div class="mc"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><span><span class="lbl" style="display:block">الوزن</span><span class="big">'+kg(l)+'</span> <small class="lbl">كجم</small></span><span class="lbl" style="text-align:end">'+(wp.length>1?'التغيّر <b style="color:'+(dd<=0?"var(--pri)":"var(--warm)")+'">'+sg(dd)+'</b><br>أقل '+kg(Math.min(...wp.map(x=>x[1])))+' · أعلى '+kg(Math.max(...wp.map(x=>x[1]))):'تسجيل واحد')+'</span></div>'+(wp.length>1?spark(wp,340,70):'')+'</div>'}}
   if(selDay&&!agg.length){h+='<div class="mc" style="text-align:center;padding:22px 12px"><div style="font-size:17px;font-weight:600">'+full(new Date(selDay+"T12:00"))+'</div><div class="lbl" style="margin-top:4px">'+(selDay>tk?"لسّه ما جا":"ما فيه تمرين مسجّل")+'</div></div>'}
   else if(!agg.length){h+='<div class="note" style="padding:16px">ما فيه تمارين مسجّلة في هالفترة</div>'}
   else{
@@ -335,6 +356,11 @@ function bind(){
  const saveName=()=>{const v=$("nm").value.trim();if(!v){$("nerr").textContent="اكتب اسمك عشان نبدأ";$("nm").focus();return}saveRun();loadProfile(v);S.tab="home";go(S.scr==="name"?"home":S.scr)};
  b("nok",saveName); if($("nm")){$("nm").oninput=()=>{$("nerr").textContent=""};$("nm").onkeydown=e=>{if(e.key==="Enter")saveName()}}
  b("chname",()=>go("name"));
+ b("wopen",()=>{S.wv=null;go("weight")}); b("wback",()=>{S.tab="home";go("home")});
+ const wval=()=>{const v=parseFloat(String($("wv").value).replace(",","."));return isNaN(v)?null:v};
+ b("wmn",()=>{const v=wval()??S.wv;S.wv=Math.max(20,v-0.1);$("wv").value=kg(S.wv)});
+ b("wpl",()=>{const v=wval()??S.wv;S.wv=Math.min(300,v+0.1);$("wv").value=kg(S.wv)});
+ b("wsave",()=>{const v=wval();if(v==null||v<20||v>300){$("werr").textContent="اكتب وزن صحيح بالكيلو، مثل 74.5";return}P.weights[dkey()]=Math.round(v*10)/10;saveProfile();S.wv=null;S.tab="home";go("home")});
  document.querySelectorAll("[data-go]").forEach(x=>x.onclick=()=>{if(S.done){Object.assign(S,fresh())}if(!S.sess0)S.sess0=now();if(x.dataset.go==="cardio")go("cardio");else startWorkout()});
  b("cta",()=>{if(!S.sess0)S.sess0=now();document.querySelector('[data-go="'+(S.c.done?"warm":"cardio")+'"]').click()});
  b("reset",()=>{Object.assign(S,fresh());S.sess0=now();go("cardio")});
