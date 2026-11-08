@@ -1,5 +1,5 @@
 // Offline support: serve the app from cache, refresh the cache when online.
-const CACHE = 'tamreen-v8';
+const CACHE = 'tamreen-v9';
 const FILES = ['./', './index.html', './manifest.webmanifest', './apple-touch-icon.png', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', (e) => {
