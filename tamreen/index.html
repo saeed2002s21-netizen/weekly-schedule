@@ -196,13 +196,13 @@ function loadProfile(name){
  if(!p){p={name:name.trim(),created:Date.now(),theme:"sky",font:1,rest:15,m:{...DEFM},last:{},days:{},weights:{}};const sd=SEED_H[fnv(norm(name))];if(sd)Object.assign(p,JSON.parse(JSON.stringify(sd)));lsSet(k,p)}
  p.weights=p.weights||{};
  {const sd=SEED_H[fnv(norm(name))];if(sd&&(p.seedV||0)<2){for(const d in sd.days){const x=p.days[d];if(!x||x.km==null)p.days[d]=JSON.parse(JSON.stringify(sd.days[d]))}for(const d in (sd.weights||{})){if(p.weights[d]==null)p.weights[d]=sd.weights[d]}if(!p.last||!Object.keys(p.last).length)p.last={...sd.last};p.seedV=2;lsSet(k,p)}}
- P=p; Object.assign(S,{name:p.name,theme:p.theme||"sky",font:p.font||1,rest:p.rest||15,snd:p.snd==null?1:p.snd,cm:p.cm||{},m:Object.assign({...DEFM},p.m||{}),last:p.last||{}},fresh());
+ P=p; Object.assign(S,{name:p.name,theme:p.theme||"sky",font:p.font||1,rest:p.rest||15,snd:p.snd==null?1:p.snd,sndMix:p.sndMix||0,cm:p.cm||{},m:Object.assign({...DEFM},p.m||{}),last:p.last||{}},fresh());
  EX.forEach(e=>{if(!e.m[S.m[e.id]])S.m[e.id]=DEFM[e.id]});
  try{localStorage.setItem("tamreen.name",p.name)}catch(e){}
  const run=lsGet("tamreen.run."+k);
  if(run&&run.day===dkey()){Object.assign(S,run.s);if(S.c.mode)motionStart(S.c.mode,true)}
 }
-function saveProfile(){if(!P)return;Object.assign(P,{theme:S.theme,font:S.font,rest:S.rest,snd:S.snd,cm:S.cm,m:S.m,last:S.last});lsSet(pkey(P.name),P)}
+function saveProfile(){if(!P)return;Object.assign(P,{theme:S.theme,font:S.font,rest:S.rest,snd:S.snd,sndMix:S.sndMix,cm:S.cm,m:S.m,last:S.last});lsSet(pkey(P.name),P)}
 function saveRun(){if(!P)return;const k="tamreen.run."+pkey(P.name);
  if(!S.sess0||S.saved){try{localStorage.removeItem(k)}catch(e){}return}
  lsSet(k,{day:dkey(),s:{c:S.c,w:S.w,done:S.done,stW:S.stW,stJ:S.stJ,steps:S.steps,paused:S.paused||0,kmH:S.kmH,hkWait:S.hkWait,sess0:S.sess0,sessEnd:S.sessEnd,saved:S.saved,scr:inWorkout()?S.scr:"home"}})}
@@ -238,11 +238,11 @@ const now=()=>Date.now(), K=()=>1, D=s=>Math.max(2,s*K())*1000;
 const gTotal=it=>(it.sides?it.d*2+(it.gap||0):it.d)*K()*1000;
 function gState(it,el){const d=it.d*K()*1000,g=(it.gap||0)*K()*1000;if(!it.sides)return{ph:0,left:d-el,frac:el/d};if(el<d)return{ph:0,left:d-el,frac:el/d,side:it.sides[0]};if(el<d+g)return{ph:1,left:d+g-el,frac:(el-d)/g,gap:1,side:it.sides[1]};return{ph:2,left:2*d+g-el,frac:(el-d-g)/d,side:it.sides[1]}}
 let AC=null;
-function ac(){try{if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume()}catch(e){}return AC}
+function ac(){try{if(navigator.audioSession){const t=S.sndMix?"ambient":"playback";if(navigator.audioSession.type!==t)navigator.audioSession.type=t}}catch(e){}try{if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume()}catch(e){}return AC}
 addEventListener("pointerdown",ac,{passive:true});
-function tone(f,t,d,v){const a=AC;if(!a)return;try{const o=a.createOscillator(),g=a.createGain();o.type="sine";o.frequency.value=f;o.connect(g);g.connect(a.destination);const st=a.currentTime+t;g.gain.setValueAtTime(0.0001,st);g.gain.exponentialRampToValueAtTime(v||.2,st+.015);g.gain.exponentialRampToValueAtTime(0.0001,st+d);o.start(st);o.stop(st+d+.05)}catch(e){}}
-const SND={tick:[[740,0,.12,.13]],go:[[880,0,.16],[1320,.12,.3]],swap:[[620,0,.14],[930,.16,.22]],rest:[[660,0,.18,.15],[495,.16,.32,.15]],done:[[660,0,.18],[880,.14,.18],[1100,.28,.18],[1320,.42,.45]]};
-function snd(k){if(!S.snd)return;ac();if(!AC)return;(SND[k]||[]).forEach(x=>tone(x[0],x[1],x[2],x[3]))}
+function tone(f,t,d,v,ty){const a=AC;if(!a)return;try{const o=a.createOscillator(),g=a.createGain();o.type=ty||"triangle";o.frequency.value=f;o.connect(g);g.connect(a.destination);const st=a.currentTime+t;g.gain.setValueAtTime(0.0001,st);g.gain.exponentialRampToValueAtTime(v||.2,st+.015);g.gain.exponentialRampToValueAtTime(0.0001,st+d);o.start(st);o.stop(st+d+.05)}catch(e){}}
+const SND={tick:[[1046,0,.17,.55]],go:[[1046,0,.18,.55],[1568,.16,.45,.55]],swap:[[784,0,.16,.5],[1175,.18,.3,.5]],rest:[[1175,0,.2,.5],[784,.18,.45,.5]],done:[[784,0,.18,.5],[1046,.15,.18,.5],[1319,.3,.18,.5],[1568,.45,.6,.55]]};
+function snd(k){if(!S.snd)return;ac();if(!AC)return;(SND[k]||[]).forEach(x=>tone(x[0],x[1],x[2],x[3],x[4]))}
 function beep(){snd("go")}
 let lastCd="";
 function cdown(key,left){const s=Math.ceil(left/1000);if(s>=1&&s<=3){const k=key+":"+s;if(k!==lastCd){lastCd=k;snd("tick")}}}
@@ -428,7 +428,7 @@ function render(){
   h='<div style="font-size:22px;font-weight:600">الإعدادات</div>'+
   '<div class="mc row"><span style="flex:1"><span class="lbl" style="display:block">الاسم</span><span style="font-size:17px;font-weight:600">'+S.name+'</span><span class="lbl" style="display:block">بياناتك محفوظة على هذا الجوال باسمك</span></span><button class="chip" id="chname">تغيير</button></div>'+
   '<div class="mc row"><span style="flex:1"><span class="lbl" style="display:block">ربط صحتي</span><span style="font-size:16px;font-weight:600">'+(P.hk?"شغّال ✓":"مو مربوط")+'</span><span class="lbl" style="display:block;font-size:12px">الخطوات والمسافة من تطبيق الصحة</span></span><button class="chip" id="hkset">الإعداد</button></div>'+
-  '<div class="mc"><div class="lbl" style="margin-bottom:8px">الأصوات</div><div class="row">'+ch("snd",1,"شغّالة",S.snd==1)+ch("snd",0,"مقفلة",S.snd==0)+'</div><div class="note" style="text-align:start;margin-top:6px">نغمات قصيرة بين الحركات والتمارين. لو الجوال على الصامت ما تطلع</div></div>'+
+  '<div class="mc"><div class="lbl" style="margin-bottom:8px">الأصوات</div><div class="row">'+ch("snd",1,"شغّالة",S.snd==1)+ch("snd",0,"مقفلة",S.snd==0)+'</div>'+(S.snd?'<div class="lbl" style="margin:12px 0 8px">طريقة الصوت</div><div class="row">'+ch("sndMix",0,"تطلع حتى على الصامت",!S.sndMix)+ch("sndMix",1,"مع الموسيقى",!!S.sndMix)+'</div><div class="note" style="text-align:start;margin-top:6px">«تطلع حتى على الصامت» توقف الموسيقى وقت التمرين. «مع الموسيقى» تخلي الموسيقى شغالة، بس النغمات ما تطلع لو الجوال على الصامت</div>':'')+'</div>'+
   '<div class="mc"><div class="lbl" style="margin-bottom:8px">الألوان</div><div class="row">'+Object.entries(THEMES).map(([k,t])=>'<button class="chip sw'+(S.theme===k?" on":"")+'" data-k="theme" data-v="'+k+'"><i class="swd" data-s="'+k+'"></i>'+t+'</button>').join("")+'</div></div>'+
   '<div class="mc"><div class="lbl" style="margin-bottom:8px">حجم الخط</div><div class="row">'+ch("font",1,"عادي",S.font==1)+ch("font",1.12,"كبير",S.font==1.12)+ch("font",1.25,"أكبر",S.font==1.25)+'</div></div>'+
   '<div class="mc"><div class="lbl" style="margin-bottom:8px">الراحة بين التمارين</div><div class="row">'+[10,15,20].map(v=>ch("rest",v,ar(v)+" ث",S.rest==v)).join("")+'</div></div>';
@@ -498,7 +498,7 @@ function bind(){
  document.querySelectorAll("[data-off]").forEach(x=>x.onclick=()=>{S.off=Math.max(0,S.off+(+x.dataset.off));S.sday=null;render()});
  document.querySelectorAll("[data-mon]").forEach(x=>x.onclick=()=>{const t=new Date(),y=t.getFullYear()-S.off;S.range="m";S.off=(t.getFullYear()-y)*12+t.getMonth()-(+x.dataset.mon);if(S.off<0)S.off=0;S.sday=null;render()});
  document.querySelectorAll("[data-mth]").forEach(x=>x.onclick=()=>{S.m[EX[S.w.i].id]=x.dataset.mth;saveProfile();render()});
- document.querySelectorAll("[data-k]").forEach(x=>x.onclick=()=>{const k=x.dataset.k,v=x.dataset.v;if(k==="theme")S.theme=v;else S[k]=+v;saveProfile();render();if(k==="snd"&&S.snd)snd("go")});
+ document.querySelectorAll("[data-k]").forEach(x=>x.onclick=()=>{const k=x.dataset.k,v=x.dataset.v;if(k==="theme")S.theme=v;else S[k]=+v;saveProfile();render();if((k==="snd"&&S.snd)||k==="sndMix")snd("go")});
 }
 function tick(){if(S.paused)return;const tt=$("tot");if(tt)tt.textContent=tm(sessMs());
  if(S.scr==="cardio"){const sn=$("snote");if(sn){const q=sNote();if(sn.dataset.q!==q){sn.dataset.q=q;sn.innerHTML=q}}const t=$("tmain");if(t)t.textContent=tm(el("walk")+el("jog"));["walk","jog"].forEach(m=>{const x=$("t-"+m);if(x)x.textContent=tm(el(m));const y=$("s-"+m);if(y)y.textContent=ar(liveSteps(m))+" خطوة · "+k2(km(liveSteps(m)))+" كم"})}
