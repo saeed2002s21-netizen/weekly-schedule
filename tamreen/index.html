@@ -345,12 +345,12 @@ function render(){
   h='<div style="flex:1"></div><div style="text-align:center"><div class="logo" style="background:var(--warmbg);color:var(--warm)">'+I("heart",36)+'</div><div style="font-size:22px;font-weight:600;margin-top:12px">جيب خطواتك من الصحة</div><div class="lbl" style="margin-top:6px">مشي '+tm(el("walk"))+' · هرولة '+tm(el("jog"))+'</div></div>'+
   (S.steps==null?'<button class="pri" id="hget">'+I("down")+' جيب خطواتي من الصحة</button><div class="note">في التطبيق الحقيقي يفتح اختصار «خطوات تمريني» ويرجع بالرقم. هنا رقم تجريبي.</div><button class="sec" id="hskip">بعدين</button>':'<div class="mc done" style="flex-direction:column"><div class="big">'+ar(S.steps)+' خطوة</div><div style="font-size:13px">انضافت من تطبيق الصحة</div></div><button class="pri" id="hhome">تمام</button>')+'<div style="flex:1.3"></div>';
  }else if(S.scr==="brk"){
-  const bk=S.w.bk||(S.w.bk={t0:now(),dur:120000}), over=now()-bk.t0>=bk.dur;
-  h=hdr("استراحة قبل التمرين")+'<div style="text-align:center;margin-top:4px"><div style="font-size:22px;font-weight:600">'+(over?"خلصت الاستراحة":"ارتاح شوي واشرب موية")+'</div><div class="lbl" style="font-size:14px;margin-top:2px">'+(over?"ابدأ التمرين لما تكون جاهز":"بعدها التحمية ثم الجلستين")+'</div></div>'+
-  ring("tcirc")+'<div class="row" style="justify-content:center">'+[2,3].map(m=>'<button class="chip'+(bk.dur===m*60000?" on":"")+'" data-bk="'+m+'">'+(m===2?"دقيقتين":"3 دقائق")+'</button>').join("")+'</div>'+
-  stepsCard()+
-  '<div class="mc"><div class="lbl" style="margin-bottom:4px">التحمية اللي بعدها</div>'+WARM.map((w,i)=>'<div class="row" style="flex-wrap:nowrap;padding:6px 0;'+(i?"border-top:1px solid var(--line)":"")+'"><span class="wn">'+(i+1)+'</span><span style="flex:1">'+w.n+'</span><span class="lbl">'+(w.sides?w.d+" + "+w.d:w.d)+' ث</span></div>').join("")+'</div>'+
-  '<div style="flex:1"></div><button class="pri" id="wgo">'+I("play")+' ابدأ التمرين</button>';
+  const bk=S.w.bk||(S.w.bk={t0:now(),dur:120000}), over=now()-bk.t0>=bk.dur, cl=bk.kind==="cool", NX=cl?COOL:WARM;
+  h=hdr(cl?"استراحة قبل الإطالات":"استراحة قبل التمرين")+'<div style="text-align:center;margin-top:4px"><div style="font-size:22px;font-weight:600">'+(over?"خلصت الاستراحة":cl?"خلصت التمارين، ارتاح شوي":"ارتاح شوي واشرب موية")+'</div><div class="lbl" style="font-size:14px;margin-top:2px">'+(over?(cl?"ابدأ الإطالات لما تكون جاهز":"ابدأ التمرين لما تكون جاهز"):(cl?"بعدها الإطالات وتخلص":"بعدها التحمية ثم الجلستين"))+'</div></div>'+
+  ring("tcirc")+'<div class="row" style="justify-content:center">'+[1,2,3].map(m=>'<button class="chip'+(bk.dur===m*60000?" on":"")+'" data-bk="'+m+'">'+(m===1?"دقيقة":m===2?"دقيقتين":"3 دقائق")+'</button>').join("")+'</div>'+
+  (cl?'':stepsCard())+
+  '<div class="mc"><div class="lbl" style="margin-bottom:4px">'+(cl?"الإطالات اللي بعدها":"التحمية اللي بعدها")+'</div>'+NX.map((w,i)=>'<div class="row" style="flex-wrap:nowrap;padding:6px 0;'+(i?"border-top:1px solid var(--line)":"")+'"><span class="wn">'+(i+1)+'</span><span style="flex:1">'+w.n+'</span><span class="lbl">'+(w.sides?w.d+" + "+w.d:w.d)+' ث</span></div>').join("")+'</div>'+
+  '<div style="flex:1"></div><button class="pri" id="wgo">'+I("play")+(cl?' ابدأ الإطالات':' ابدأ التمرين')+'</button>';
  }else if(S.scr==="hk"){
   const stp=['افتح تطبيق <b>الاختصارات</b> واضغط <b>+</b>، وسمّ الاختصار بالضبط: <b>خطوات تمريني</b>',
    'أضف إجراء <b>البحث عن عينات الصحة</b> (Find Health Samples): النوع <b>الخطوات</b>، والشرط <b>تاريخ البدء</b> «في آخر»، اضغط على الرقم واختر <b>مدخل الاختصار</b>، والوحدة <b>دقائق</b>',
@@ -445,7 +445,7 @@ function preGuide(ms){S.w.tr=true;S.w.pre=true;S.w.t0=now();S.w.dur=ms;snd("rest
 function startGuide(stage){const L=stage==="warm"?WARM:COOL;S.w.stage=stage;S.w.i=0;S.w.tr=false;S.w.pre=false;S.w.t0=now();S.w.dur=gTotal(L[0]);S.w.ph=-1;S.w.exit=false;go(stage)}
 function startEx(i,round){S.w.i=i;S.w.round=round;S.w.val=0;S.w.pk=null;go("ex")}
 function exDone(){const e=EX[S.w.i];if(Object.keys(e.m).length>1)(S.w.lv=S.w.lv||{})[e.id]=lvl(e.id);if(S.w.pk){S.w.val=Math.floor((now()-S.w.pk)/1000);S.w.pk=null}S.w.reps[e.id]=(S.w.reps[e.id]||0)+S.w.val;(S.w.rr[e.id]=S.w.rr[e.id]||[])[S.w.round]=S.w.val;
- let ni=S.w.i+1, nr=S.w.round; if(ni>=EX.length){if(nr===1){startGuide("cool");preGuide(20000);return}ni=0;nr=1}
+ let ni=S.w.i+1, nr=S.w.round; if(ni>=EX.length){if(nr===1){S.w.bk={t0:now(),dur:60000,fin:false,kind:"cool"};snd("rest");go("brk");return}ni=0;nr=1}
  S.w.next={i:ni,round:nr}; S.w.t0=now(); S.w.dur=D(nr!==S.w.round?60:S.rest); snd("rest"); go("rest")}
 function restDone(){snd("go");startEx(S.w.next.i,S.w.next.round)}
 const GAP=4, gL=()=>S.w.stage==="warm"?WARM:COOL;
@@ -467,7 +467,7 @@ function bind(){
  b("mopen",()=>{S.medit=true;render()}); b("mcancel",()=>{S.medit=false;render()});
  b("msave",()=>{const st=parseInt(String($("mst").value).replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/\D/g,""));const kv=parseFloat(String($("mkm").value).replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[٫,]/g,"."));if(!st||st<1||st>100000){$("merr").textContent="اكتب عدد خطوات صحيح";return}applySteps(st,isNaN(kv)?null:kv,true)});
  document.querySelectorAll("[data-bk]").forEach(x=>x.onclick=()=>{S.w.bk.dur=+x.dataset.bk*60000;S.w.bk.fin=false;saveRun();render()});
- b("wgo",()=>startWorkout());
+ b("wgo",()=>{if(S.w.bk&&S.w.bk.kind==="cool"){startGuide("cool");preGuide(20000)}else startWorkout()});
  b("pz",()=>{S.paused=now();S.w.exit=false;render()}); b("pzgo",pauseGo);
  document.querySelectorAll("[data-cv]").forEach(x=>x.onclick=()=>{const it=gL()[tIdx()];(S.cm=S.cm||{})[it.key]=x.dataset.cv;saveProfile();render()});
  document.querySelectorAll("[data-rep]").forEach(x=>x.onclick=()=>{S.w.val=+x.dataset.rep;$("val").textContent=ar(S.w.val);hlChips()});
